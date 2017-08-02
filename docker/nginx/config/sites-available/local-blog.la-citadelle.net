@@ -1,0 +1,28 @@
+server {
+  listen 80;
+
+  server_name local-blog.la-citadelle.net;
+
+  access_log /var/log/nginx/citadel_blog.access.log;
+  error_log /var/log/nginx/citadel_blog.error.log;
+
+  merge_slashes on;
+
+  root /srv/app;
+
+  location / {
+        proxy_http_version 1.1;
+        proxy_pass http://citadel_wordpress;
+        proxy_set_header        Host            $host;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_buffering off;
+        proxy_ignore_client_abort on;
+  }
+
+  location ~ /\.ht {
+    deny all;
+  }
+}

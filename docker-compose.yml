@@ -15,8 +15,6 @@ services:
       - citadel
     volumes:
       - ".:/srv/app"
-    ports:
-      - "80:80"
 
   mysql:
       container_name: citadel_mysql
@@ -46,3 +44,26 @@ services:
       - citadel.env
     networks:
       - citadel
+
+  nginx:
+      container_name: citadel_nginx
+      build: docker/nginx
+      depends_on:
+          - app
+          - wordpress
+      env_file:
+          - citadel.env
+      extra_hosts:
+          - "local.la-citadelle.net:127.0.0.1"
+          - "local-blog.la-citadelle.net:127.0.0.1"
+      volumes:
+          # applications
+          - ".:/srv/app"
+          # nginx
+          - "./volumes/html:/usr/share/nginx/html"
+          - "./volumes/logs/nginx:/var/log/nginx"
+      networks:
+          - citadel
+      ports:
+          - "443:443"
+          - "80:80"
