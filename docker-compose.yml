@@ -18,22 +18,31 @@ services:
     ports:
       - "80:80"
 
-  postgresql:
-    container_name: citadel_postgresql
-    image: postgres
-    env_file:
-      - citadel.env
-    networks:
-      - citadel
-    ports:
-      - "5432"
+  mysql:
+      container_name: citadel_mysql
+      build: docker/mysql
+      env_file:
+          - citadel.env
+      volumes:
+          # mysql
+          - "./volumes/mysql:/var/lib/mysql"
+      networks:
+          - citadel
 
-  phpgpadmin:
-    container_name: citadel_phpgpadmin
-    image: zhajor/docker-phppgadmin
+  phpmyadmin:
+      container_name: citadel_phpmyadmin
+      image: nazarpc/phpmyadmin
+      environment:
+          SESSION_TIMEOUT: 86400
+      networks:
+          - citadel
+      ports:
+          - "8082:80"
+
+  wordpress:
+    container_name: citadel_wordpress
+    image: wordpress
     env_file:
       - citadel.env
     networks:
       - citadel
-    ports:
-      - "9090:80"
