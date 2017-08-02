@@ -1,0 +1,39 @@
+---
+version: "3"
+networks:
+  citadel:
+    driver: bridge
+
+services:
+  app:
+    container_name: citadel_app
+    build: docker/app
+    working_dir: /srv/app
+    env_file:
+      - citadel.env
+    networks:
+      - citadel
+    volumes:
+      - ".:/srv/app"
+    ports:
+      - "80:80"
+
+  postgresql:
+    container_name: citadel_postgresql
+    image: postgres
+    env_file:
+      - citadel.env
+    networks:
+      - citadel
+    ports:
+      - "5432"
+
+  phpgpadmin:
+    container_name: citadel_phpgpadmin
+    image: zhajor/docker-phppgadmin
+    env_file:
+      - citadel.env
+    networks:
+      - citadel
+    ports:
+      - "9090:80"
