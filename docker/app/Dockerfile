@@ -8,7 +8,8 @@ RUN \
   npm -g install pm2 artillery knex \
   && chmod a+x /entrypoint.sh && chown root:root /entrypoint.sh
 
-
 ENTRYPOINT ["/entrypoint.sh"]
+
+EXPOSE 80
 
 CMD ["pm2-docker", "/pm2_configuration.yml"]
