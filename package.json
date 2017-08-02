@@ -1,0 +1,27 @@
+{
+  "name": "citadel-webapp",
+  "version": "0.0.1",
+  "description": "Official web application for La Citadelle",
+  "main": "index.js",
+  "scripts": {
+    "start": "srv/app/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CitadelTechnologies/webapp.git"
+  },
+  "keywords": ["politics", "social", "philosophy", "society"],
+  "author": "Kern",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CitadelTechnologies/webapp/issues"
+  },
+  "homepage": "https://github.com/CitadelTechnologies/webapp#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "next": "^2.4.9",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+}
