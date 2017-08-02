@@ -1,3 +1,7 @@
+## [Unreleased]
+### Added
+- Makefile commands as shortcuts
+
 ## [0.0.1] - 2017-08-02
 ### Added
 - Postgresql container
