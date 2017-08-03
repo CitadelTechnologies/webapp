@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const next = require('next');
-//const apiHandler = require('./api')
+const apiHandler = require('./api')
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({
@@ -13,7 +13,7 @@ const nextHandler = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
-//  server.use('/api', apiHandler);
+  server.use('/api', apiHandler);
   server.get('*', (req, res) => {
     return nextHandler(req, res);
   });
