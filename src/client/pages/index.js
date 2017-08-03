@@ -1,7 +1,8 @@
+import glamorous from 'glamorous';
+import Layout from '../components/Layout';
+
 const Index = () => (
-  <div>
-    <h1>La Citadelle</h1>
-  </div>
+  <Layout></Layout>
 );
 
 export default Index;
