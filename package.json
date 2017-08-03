@@ -28,8 +28,10 @@
     "glamor": "^2.20.38",
     "glamorous": "^3.25.0",
     "knex": "^0.13.0",
+    "mysql": "^2.14.1",
     "next": "^2.4.9",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
-  }
+  },
+  "devDependencies": {}
 }
