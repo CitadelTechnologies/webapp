@@ -1,5 +1,5 @@
 import glamorous from 'glamorous';
-import Link from 'next/link';
+import Router from 'next/router';
 
 const Body = glamorous.div({
 
@@ -20,7 +20,9 @@ const Toolbar = glamorous.div({
 
 const ToolbarLink = glamorous.a({
   textDecoration: 'none',
-  color: 'black'
+  cursor: 'pointer',
+  color: 'black',
+  padding: '0px 10px'
 });
 
 const Title = glamorous.h1({
@@ -46,14 +48,13 @@ const Logo = glamorous.div(
 const Layout = ({ children }) => (
   <Body>
     <Header>
-      <Title>
+      <Title onClick={() => Router.push("/")}>
         <Logo picture="/static/images/blason.png" />
         La Citadelle
       </Title>
       <Toolbar>
-        <Link href="http://local-blog.la-citadelle.net">
-          <ToolbarLink>Blog</ToolbarLink>
-        </Link>
+          <ToolbarLink onClick={() => Router.push("/projects")}>Projets</ToolbarLink>
+          <ToolbarLink href="http://local-blog.la-citadelle.net">Blog</ToolbarLink>
       </Toolbar>
     </Header>
     { children }
