@@ -1,5 +1,5 @@
 import glamorous from 'glamorous';
-import Router from 'next/router';
+import Link from 'next/link';
 
 const Body = glamorous.div({
 
@@ -27,9 +27,12 @@ const ToolbarLink = glamorous.a({
 
 const Title = glamorous.h1({
   width: '20%',
-  display: 'flex',
-  justifyContent: 'space-around',
-  alignItems: 'center'
+  cursor: 'pointer',
+  '& div': {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  }
 });
 
 const Logo = glamorous.div(
@@ -45,20 +48,47 @@ const Logo = glamorous.div(
   })
 );
 
-const Layout = ({ children }) => (
-  <Body>
-    <Header>
-      <Title onClick={() => Router.push("/")}>
-        <Logo picture="/static/images/blason.png" />
-        La Citadelle
-      </Title>
-      <Toolbar>
-          <ToolbarLink onClick={() => Router.push("/projects")}>Projets</ToolbarLink>
-          <ToolbarLink href="http://local-blog.la-citadelle.net">Blog</ToolbarLink>
-      </Toolbar>
-    </Header>
-    { children }
-  </Body>
-);
+var styles = {
+    body: {
+        margin: '0'
+    }
+}
+
+class Layout extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    if(typeof window !== 'undefined') {
+        var i = 0;
+        for(i in styles.body){
+            document.body.style[i] = styles.body[i];
+        }
+    }
+  }
+
+  render() {
+    return (
+      <Body>
+        <Header>
+          <Title>
+            <Link href="/">
+              <div>
+                <Logo picture="/static/images/blason.png" />
+                La Citadelle
+              </div>
+            </Link>
+          </Title>
+          <Toolbar>
+              <ToolbarLink href="/projects">Projets</ToolbarLink>
+              <ToolbarLink href="http://local-blog.la-citadelle.net">Blog</ToolbarLink>
+          </Toolbar>
+        </Header>
+        { this.props.children }
+      </Body>
+    );
+  }
+};
 
 export default Layout;

@@ -1,7 +1,8 @@
 import React from 'react';
 import glamorous from 'glamorous';
+import Router from 'next/router';
 
-const Card = glamorous.div({
+const Card = glamorous.a({
   width: 250,
   height: 250,
   margin: 10,
@@ -37,7 +38,7 @@ const PictureBackground = glamorous.div(
   })
 );
 
-const nameStyle = {
+const Name = glamorous.div({
   color: 'white',
   bottom: 10,
   fontFamily: 'sans-serif',
@@ -46,17 +47,23 @@ const nameStyle = {
   flex: 1,
   zIndex: 1,
   textAlign: 'center'
-};
+});
 
-const ProjectCard = ({ project }) => {
-  return (
-    <Card>
-      <PictureBackground picture={project.cover_picture} />
-      <div style={nameStyle}>
-        {project.name}
-      </div>
-    </Card>
-  )
+class ProjectCard extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Card id={this.props.project.id} href={`/project?id=${this.props.project.id}`}>
+        <PictureBackground picture={this.props.project.cover_picture} />
+        <Name>
+          {this.props.project.name}
+        </Name>
+      </Card>
+    );
+  }
 };
 
 export default ProjectCard;
