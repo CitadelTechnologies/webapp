@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/CitadelTechnologies/webapp#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "express": "^4.15.3",
     "express-graphql": "^0.6.7",
     "glamor": "^2.20.38",
