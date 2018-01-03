@@ -1,4 +1,6 @@
-exports.seed = (knex, Promise) => knex('topic__topics').del().then(() =>
+exports.seed = (knex, Promise) => knex('topic__thematics')
+  .del()
+  .then(() => knex('topic__topics').del().then(() =>
   knex('topic__topics').insert([
     {
       id: 1,
@@ -40,5 +42,5 @@ exports.seed = (knex, Promise) => knex('topic__topics').del().then(() =>
       picto: '',
       picture: ''
     },
-  ]);
-);
+  ])
+));
