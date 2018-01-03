@@ -1,8 +1,8 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import Router from 'next/router';
+import Link from 'next/link';
 
-const Card = glamorous.a({
+const Card = glamorous.div({
   width: 250,
   height: 250,
   margin: 10,
@@ -56,12 +56,14 @@ class ProjectCard extends React.Component {
 
   render() {
     return (
-      <Card id={this.props.project.id} href={`/project?id=${this.props.project.id}`}>
-        <PictureBackground picture={this.props.project.cover_picture} />
-        <Name>
-          {this.props.project.name}
-        </Name>
-      </Card>
+      <Link id={this.props.project.id} href={`/project?id=${this.props.project.id}`}>
+        <Card>
+          <PictureBackground picture={this.props.project.cover_picture} />
+          <Name>
+            {this.props.project.name}
+          </Name>
+        </Card>
+      </Link>
     );
   }
 };

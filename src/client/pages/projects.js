@@ -68,7 +68,8 @@ class Projects extends Component {
       <div>
         <Head>
           <title>La Citadelle - Projets</title>
-          <link rel="icon" href="/static/images/corbin_logo.png" />
+          <link rel="icon" href="/static/images/armoiries.png" />
+          <link href="https://fonts.googleapis.com/css?family=Quattrocento" rel="stylesheet" />
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
@@ -78,7 +79,7 @@ class Projects extends Component {
           <Container>
             <Input
               type="text"
-              placeholder="search"
+              placeholder="Rechercher"
               value={this.state.searchQuery || ''}
               onChange={e => this.search(e.target.value)}
             />

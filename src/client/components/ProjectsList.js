@@ -13,12 +13,7 @@ const ProjectsList = ({ projects }) => {
   return (
       <div style={listStyle}>
         {projects.map(project =>
-          <a
-            style={{ textDecoration: 'none' }}
-            key={project.id}
-          >
-            <ProjectCard project={project} />
-          </a>
+            <ProjectCard key={project.id} project={project} />
         )}
       </div>
   )

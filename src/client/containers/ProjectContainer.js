@@ -16,6 +16,8 @@ const projectQuery = gql`
     project(id: $id) {
       id
       name
+      description
+      url
       picture
       cover_picture
       responsible {

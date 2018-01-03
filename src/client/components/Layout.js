@@ -2,36 +2,55 @@ import glamorous from 'glamorous';
 import Link from 'next/link';
 
 const Body = glamorous.div({
-
+  fontFamily: 'Quattrocento'
 });
 
 const Header = glamorous.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  "@media(max-width:500px)": {
+    flexDirection: "column"
+  }
 });
 
 const Toolbar = glamorous.div({
   display: 'flex',
   justifyContent: 'space-around',
   fontSize: '1.2em',
-  marginRight: '10%'
-});
-
-const ToolbarLink = glamorous.a({
-  textDecoration: 'none',
-  cursor: 'pointer',
-  color: 'black',
-  padding: '0px 10px'
+  marginRight: '10%',
+  "& a": {
+    textDecoration: 'none',
+    cursor: 'pointer',
+    color: 'black',
+    padding: '0px 10px'
+  },
+  "@media(max-width:500px)": {
+    paddingTop: '15px',
+    paddingBottom: '10px',
+    borderTop: '1px solid black',
+    marginRight: '0px',
+    "& a": {
+      width: '80px',
+      textAlign: 'center'
+    }
+  }
 });
 
 const Title = glamorous.h1({
-  width: '20%',
+  width: '300px',
   cursor: 'pointer',
   '& div': {
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
+    "@media(max-width:500px)": {
+      marginBottom: '0px',
+      flexDirection: 'column',
+      "& div": {
+        marginBottom: '10px'
+      }
+    }
   }
 });
 
@@ -81,8 +100,8 @@ class Layout extends React.Component {
             </Link>
           </Title>
           <Toolbar>
-              <ToolbarLink href="/projects">Projets</ToolbarLink>
-              <ToolbarLink href="http://local-blog.la-citadelle.net">Blog</ToolbarLink>
+              <Link href="/projects">Projets</Link>
+              <Link href="http://local-blog.la-citadelle.net">Blog</Link>
           </Toolbar>
         </Header>
         { this.props.children }
