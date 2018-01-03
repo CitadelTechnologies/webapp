@@ -11,6 +11,7 @@ module.exports = `
     name: String!
     description: String
     picture: String
+    url: String
     cover_picture: String
     created_at: String
     updated_at: String
