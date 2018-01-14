@@ -116,7 +116,7 @@ class Layout extends React.Component {
           </Title>
           <Toolbar>
               <Link href="/projects">Projets</Link>
-              <Link href="http://local-blog.la-citadelle.net">Blog</Link>
+              <Link href="http://blog.la-citadelle.net">Blog</Link>
           </Toolbar>
         </Header>
         { this.props.children }
