@@ -75,6 +75,12 @@ const Logo = glamorous.div(
   })
 );
 
+const Wrapper = glamorous.div({
+  width: '100%',
+  height: '100%',
+  marginTop: '140px',
+})
+
 var styles = {
     body: {
         margin: '0'
@@ -120,7 +126,9 @@ class Layout extends React.Component {
               <Link href={config.blogUrl}>Blog</Link>
           </Toolbar>
         </Header>
-        { this.props.children }
+        <Wrapper>
+          { this.props.children }
+        </Wrapper>
       </Body>
     );
   }

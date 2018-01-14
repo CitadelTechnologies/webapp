@@ -14,7 +14,7 @@ const CatchPhrase = glamorous.div({
 });
 
 const HomepagePicture = glamorous.div({
-  marginTop: '-140px',
+  marginTop: '-280px',
   overflow: 'hidden',
   height: '100% !important',
   "& img": {
