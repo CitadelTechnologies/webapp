@@ -22,6 +22,8 @@ server {
         proxy_ignore_client_abort on;
   }
 
+  client_max_body_size 2M;
+
   location ~ /\.ht {
     deny all;
   }
