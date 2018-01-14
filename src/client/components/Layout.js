@@ -1,3 +1,4 @@
+import config from '../config';
 import glamorous from 'glamorous';
 import Link from 'next/link';
 
@@ -116,7 +117,7 @@ class Layout extends React.Component {
           </Title>
           <Toolbar>
               <Link href="/projects">Projets</Link>
-              <Link href="http://blog.la-citadelle.net">Blog</Link>
+              <Link href={config.blogUrl}>Blog</Link>
           </Toolbar>
         </Header>
         { this.props.children }

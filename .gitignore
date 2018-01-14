@@ -3,3 +3,4 @@ node_modules
 src/client/.next
 volumes/mysql
 volumes/logs
+src/client/config.js

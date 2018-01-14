@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
+import config from '../config';
+import React, { Component } from 'react';
 import {
   ApolloClient,
   createNetworkInterface,
   ApolloProvider,
-} from 'react-apollo'
+} from 'react-apollo';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: 'http://local.la-citadelle.net/api',
+    uri: `${config.apiUrl}/api`,
   })
 });
 
