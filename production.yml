@@ -1,4 +1,5 @@
 ---
+version: '2'
 services:
   app:
     container_name: citadel_app
@@ -20,16 +21,6 @@ services:
           # mysql
           - "./volumes/mysql:/var/lib/mysql"
 
-  phpmyadmin:
-      container_name: citadel_phpmyadmin
-      image: nazarpc/phpmyadmin
-      environment:
-          SESSION_TIMEOUT: 86400
-      links:
-          - mysql
-      ports:
-          - "8082:80"
-
   wordpress:
     container_name: citadel_wordpress
     image: wordpress
@@ -41,9 +32,6 @@ services:
   nginx:
       container_name: citadel_nginx
       build: docker/nginx
-      depends_on:
-          - app
-          - wordpress
       env_file:
           - citadel.env
       extra_hosts:
