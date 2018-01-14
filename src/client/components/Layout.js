@@ -2,13 +2,20 @@ import glamorous from 'glamorous';
 import Link from 'next/link';
 
 const Body = glamorous.div({
-  fontFamily: 'Quattrocento'
+  fontFamily: 'Quattrocento',
 });
 
 const Header = glamorous.div({
+  position: 'fixed',
+  top: '0px',
+  left: '0px',
+  width: '100%',
+  height: '140px',
   display: 'flex',
+  backgroundColor: 'white',
   alignItems: 'center',
   justifyContent: 'space-between',
+  zIndex: '10',
   "@media(max-width:500px)": {
     flexDirection: "column"
   }
@@ -87,9 +94,17 @@ class Layout extends React.Component {
     }
   }
 
+  componentDidMount() {
+    document.querySelector('#react-body').style.height = `${screen.height}px`;
+  }
+
+  componentDidUpdate() {
+    document.querySelector('#react-body').style.height = `${screen.height}px`;
+  }
+
   render() {
     return (
-      <Body>
+      <Body id="react-body">
         <Header>
           <Title>
             <Link href="/">
