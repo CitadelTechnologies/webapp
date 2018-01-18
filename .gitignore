@@ -1,3 +1,4 @@
+.env
 citadel.env
 node_modules
 src/client/.next

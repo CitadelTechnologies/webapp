@@ -1,6 +1,8 @@
 FROM node:latest
 MAINTAINER Kern <kern046@gmail.com>
 
+ARG environment
+
 COPY docker-entrypoint.sh /entrypoint.sh
 COPY pm2_configuration.yml /pm2_configuration.yml
 
@@ -12,4 +14,4 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 80
 
-CMD ["pm2-docker", "/pm2_configuration.yml"]
+CMD pm2-docker /pm2_configuration.yml --env ${environment}

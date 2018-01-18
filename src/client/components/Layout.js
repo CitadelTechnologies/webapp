@@ -122,8 +122,8 @@ class Layout extends React.Component {
             </Link>
           </Title>
           <Toolbar>
-              <Link href="/projects">Projets</Link>
-              <Link href={config.blogUrl}>Blog</Link>
+              <Link href="/projects"><a>Projets</a></Link>
+              <Link href={config.blogUrl} target="_blank"><a>Blog</a></Link>
           </Toolbar>
         </Header>
         <Wrapper>
