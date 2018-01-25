@@ -1,15 +1,14 @@
 import config from '../config';
 import React, { Component } from 'react';
-import {
-  ApolloClient,
-  createNetworkInterface,
-  ApolloProvider,
-} from 'react-apollo';
+import fetch from 'node-fetch';
+import { ApolloClient } from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface({
-    uri: `${config.apiUrl}/api`,
-  })
+  link: createHttpLink({ uri: `${config.apiUrl}/api`, fetch: fetch }),
+  cache: new InMemoryCache()
 });
 
 const apolloWrapper = WrappedComponent => {

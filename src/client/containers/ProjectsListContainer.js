@@ -1,6 +1,7 @@
-import React from 'react'
-import { gql, graphql } from 'react-apollo'
-import ProjectsList from '../components/ProjectsList'
+import React from 'react';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+import ProjectsList from '../components/ProjectsList';
 
 const ProjectsListContainer = ({ data }) => {
   if (data.loading || data.error)
@@ -9,7 +10,7 @@ const ProjectsListContainer = ({ data }) => {
     )
 
   return <ProjectsList projects={data.projects} />
-}
+};
 
 const projectsQuery = gql`
   query FilterProjects($search: String) {
@@ -24,7 +25,8 @@ const projectsQuery = gql`
       }
     }
   }
-`
+`;
+
 export default graphql(projectsQuery, {
   options: ({ search }) => ({ search }),
-})(ProjectsListContainer)
+})(ProjectsListContainer);
