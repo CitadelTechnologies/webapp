@@ -2,8 +2,4 @@ apps:
   - script   : '/srv/app/src/server.js'
     name     : 'app'
     exec_mode: 'cluster'
-    instances: 1,
-    env:
-        NODE_ENV: 'development'
-    env_production:
-        NODE_ENV: 'production'
+    instances: 1

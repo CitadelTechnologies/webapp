@@ -7,11 +7,10 @@ networks:
 services:
   app:
     container_name: citadel_app
-    build:
-      context: docker/app
-      args:
-        environment: ${NODE_ENV}
+    build: docker/app
     working_dir: /srv/app
+    environment:
+      NODE_ENV: ${NODE_ENV}
     env_file:
       - citadel.env
     networks:
