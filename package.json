@@ -4,7 +4,8 @@
   "description": "Official web application for La Citadelle",
   "main": "index.js",
   "scripts": {
-    "start": "srv/app/server.js",
+    "start": "/srv/app/src/server.js",
+    "build": "next build src/client/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

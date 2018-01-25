@@ -4,7 +4,6 @@ const next = require('next');
 const apiHandler = require('./api')
 
 const dev = process.env.NODE_ENV !== 'production';
-console.log(process.env.NODE_ENV, dev);
 const app = next({
   dev,
   dir: path.resolve(__dirname + '/client'),

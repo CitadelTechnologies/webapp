@@ -4,7 +4,7 @@ if [ ! -d "/srv/app/node_modules" ]; then
 fi
 
 if [ "$NODE_ENV" = "production" ]; then
-  next build src/client
+  npm --prefix /srv/app run build
 fi
 
 exec "$@"
