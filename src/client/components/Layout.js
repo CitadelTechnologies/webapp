@@ -34,10 +34,12 @@ const Toolbar = glamorous.div({
     padding: '0px 10px'
   },
   "@media(max-width:500px)": {
+    width: '100%',
     paddingTop: '15px',
     paddingBottom: '10px',
     borderTop: '1px solid black',
     marginRight: '0px',
+    backgroundColor: 'white',
     "& a": {
       width: '80px',
       textAlign: 'center'
@@ -55,10 +57,13 @@ const Title = glamorous.h1({
     "@media(max-width:500px)": {
       marginBottom: '0px',
       flexDirection: 'column',
-      "& div": {
-        marginBottom: '10px'
-      }
     }
+  },
+  "@media(max-width: 500px)": {
+    width: '100%',
+    margin: '0px',
+    paddingBottom: '10px',
+    backgroundColor: 'white',
   }
 });
 

@@ -19,6 +19,9 @@ const HomepagePicture = glamorous.div({
   height: '100% !important',
   "& img": {
     width: '100%'
+  },
+  "@media(max-width: 480px)": {
+    display: 'none'
   }
 });
 
