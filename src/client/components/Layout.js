@@ -24,20 +24,32 @@ const Header = glamorous.div({
 
 const Toolbar = glamorous.div({
   display: 'flex',
+  alignItems: 'center',
   justifyContent: 'space-around',
   fontSize: '1.2em',
   marginRight: '10%',
   "& a": {
+      textAlign: 'center',
     textDecoration: 'none',
     cursor: 'pointer',
     color: 'black',
-    padding: '0px 10px'
+    padding: '0px 10px',
+    margin: '0px 10px',
+    "&.button": {
+        minWidth: '100px',
+        backgroundColor: '#000',
+        color: '#EFEFEF',
+        padding: '10px',
+        borderRadius: '30px'
+    }
   },
   "@media(max-width:500px)": {
+    width: '100%',
     paddingTop: '15px',
     paddingBottom: '10px',
     borderTop: '1px solid black',
     marginRight: '0px',
+    backgroundColor: 'white',
     "& a": {
       width: '80px',
       textAlign: 'center'
@@ -55,10 +67,13 @@ const Title = glamorous.h1({
     "@media(max-width:500px)": {
       marginBottom: '0px',
       flexDirection: 'column',
-      "& div": {
-        marginBottom: '10px'
-      }
     }
+  },
+  "@media(max-width: 500px)": {
+    width: '100%',
+    margin: '0px',
+    paddingBottom: '10px',
+    backgroundColor: 'white',
   }
 });
 
@@ -88,50 +103,60 @@ var styles = {
 }
 
 class Layout extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props);
 
-  componentWillMount() {
-    if(typeof window !== 'undefined') {
-        var i = 0;
-        for(i in styles.body){
-            document.body.style[i] = styles.body[i];
+        this.state = {
+            user: null
+        };
+    }
+
+    componentWillMount() {
+        if(typeof window !== 'undefined') {
+            var i = 0;
+            for(i in styles.body){
+                document.body.style[i] = styles.body[i];
+            }
+            this.state.user = JSON.parse(localStorage.getItem('user'));
         }
     }
-  }
 
-  componentDidMount() {
-    document.querySelector('#react-body').style.height = `${screen.height}px`;
-  }
+    componentDidMount() {
+        document.querySelector('#react-body').style.height = `${screen.height}px`;
+    }
 
-  componentDidUpdate() {
-    document.querySelector('#react-body').style.height = `${screen.height}px`;
-  }
+    componentDidUpdate() {
+        document.querySelector('#react-body').style.height = `${screen.height}px`;
+    }
 
-  render() {
-    return (
-      <Body id="react-body">
-        <Header>
-          <Title>
-            <Link href="/">
-              <div>
-                <Logo picture="/static/images/blason.png" />
-                La Citadelle
-              </div>
-            </Link>
-          </Title>
-          <Toolbar>
-              <Link href="/projects"><a>Projets</a></Link>
-              <Link href={config.blogUrl} target="_blank"><a>Blog</a></Link>
-          </Toolbar>
-        </Header>
-        <Wrapper>
-          { this.props.children }
-        </Wrapper>
-      </Body>
-    );
-  }
+    render() {
+        return (
+            <Body id="react-body">
+                <Header>
+                    <Title>
+                        <Link href="/">
+                            <div>
+                                <Logo picture="/static/images/blason.png" />
+                                La Citadelle
+                            </div>
+                        </Link>
+                    </Title>
+                    <Toolbar>
+                        <Link href="/projects"><a>Projets</a></Link>
+                        <Link href={config.blogUrl} target="_blank"><a>Blog</a></Link>
+                        {
+                            this.state.user == null
+                            ? <Link href="/login"><a class="button">Se connecter</a></Link>
+                            : <Link href="/"><a class="button">{ this.state.user.username }</a></Link>
+                        }
+                    </Toolbar>
+                </Header>
+                <Wrapper>
+                    { this.props.children }
+                </Wrapper>
+            </Body>
+        );
+    }
 };
 
 export default Layout;

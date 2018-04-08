@@ -1,8 +1,8 @@
 ---
 version: "3"
 networks:
-  citadel:
-    driver: bridge
+    citadel:
+        driver: bridge
 
 services:
   app:
@@ -17,6 +17,31 @@ services:
       - citadel
     volumes:
       - ".:/srv/app"
+
+  authentication_server:
+      container_name: citadel_sso
+      image: citadeltechnologies/authentication-server
+      env_file:
+          - citadel.env
+      networks:
+          - citadel
+
+  redis:
+      container_name: citadel_redis
+      image: redis
+      env_file:
+          - citadel.env
+      networks:
+          - citadel
+
+  redis_commander:
+      container_name: citadel_redis_commander
+      image: tenstartups/redis-commander
+      command: --redis-host redis
+      networks:
+        - citadel
+      ports:
+        - "8081:8081"
 
   mysql:
       container_name: citadel_mysql
