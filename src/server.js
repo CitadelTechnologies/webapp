@@ -1,7 +1,8 @@
 const path = require('path');
 const express = require('express');
 const next = require('next');
-const apiHandler = require('./api')
+const apiHandler = require('./api');
+const cors = require('cors');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({
@@ -13,6 +14,7 @@ const nextHandler = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
+  server.use(cors());
   server.use('/api', apiHandler);
   server.get('*', (req, res) => {
     return nextHandler(req, res);

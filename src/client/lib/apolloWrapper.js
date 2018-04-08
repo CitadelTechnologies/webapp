@@ -7,7 +7,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const client = new ApolloClient({
-  link: createHttpLink({ uri: `${config.apiUrl}/api`, fetch: fetch }),
+  link: createHttpLink({ uri: `${config.apiUrl}/api/graphql`, fetch: fetch }),
   cache: new InMemoryCache()
 });
 
