@@ -2,7 +2,7 @@ const db = require('../repositories');
 const budgetManager = require('../managers/budgets');
 
 const resolveProject = project => Object.assign({}, project, {
-    budget: () => budgetManager.getBudget(project.slug),
+    budget: () => budgetManager.getBudget(`budget-projet-${project.slug}`),
     responsible: () => db.users.findOne({ id: project.responsible_id }).then(([responsible]) => responsible)
 });
 

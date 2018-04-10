@@ -146,8 +146,8 @@ class Layout extends React.Component {
                         <Link href={config.blogUrl} target="_blank"><a>Blog</a></Link>
                         {
                             this.state.user == null
-                            ? <Link href="/login"><a class="button">Se connecter</a></Link>
-                            : <Link href="/"><a class="button">{ this.state.user.username }</a></Link>
+                            ? <Link href="/login"><a className="button">Se connecter</a></Link>
+                            : <Link href="/"><a className="button">{ this.state.user.username }</a></Link>
                         }
                     </Toolbar>
                 </Header>

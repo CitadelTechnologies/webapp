@@ -25,6 +25,17 @@ const projectQuery = gql`
         id
         username
       }
+      budget {
+        name
+        slug
+        sectors {
+            name
+            slug
+            transactions {
+                wording
+            }
+        }
+      }
     }
   }
 `;
