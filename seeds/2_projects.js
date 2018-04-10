@@ -3,6 +3,7 @@ exports.seed = (knex, Promise) => knex('project__projects').del()
         {
           id: 1,
           name: 'Medievistes',
+          slug: 'medievistes',
           description:
             `<p>Médiévistes est une plateforme communautaire dédiée à l\'univers de la reconstitution médiévale.
             Elle vise à mettre en relation les troupes de reconstitution, les artisans et commerçants,
@@ -26,6 +27,7 @@ exports.seed = (knex, Promise) => knex('project__projects').del()
         {
           id: 2,
           name: 'DevelopTech',
+          slug: 'developtech',
           description:
             `<p>DevelopTech est un projet d'association pour développeurs juniors.
             Elle vise les étudiants et autres amateurs qui souhaitant consolider leur expérience technique par le biais de projets sérieux.
@@ -53,6 +55,7 @@ exports.seed = (knex, Promise) => knex('project__projects').del()
         {
           id: 3,
           name: 'Pilule Rouge',
+          slug: 'pilule-rouge',
           description:
             `<p>Pilule Rouge est un blog de réflexion quant à de nombreux sujets,
             qu'ils concernent la société ou traitent de philosophie</p>
@@ -71,6 +74,7 @@ exports.seed = (knex, Promise) => knex('project__projects').del()
         {
           id: 4,
           name: 'Paradis Sauvage',
+          slug: 'paradis-sauvage',
           description:
             `<p>Paradis Sauvage est un projet de jeu vidéo centré autour de l'éveil vis-à-vis de la Nature.</p>
             <p>Ludique, ce jeu propose de gérer une réserve naturelle, et d'y découvrir la faune et la flore.
