@@ -1,7 +1,9 @@
 const db = require('../repositories');
+const budgetManager = require('../managers/budgets');
 
 const resolveProject = project => Object.assign({}, project, {
-  responsible: () => db.users.findOne({ id: project.responsible_id }).then(([responsible]) => responsible)
+    budget: () => budgetManager.getBudget(project.slug),
+    responsible: () => db.users.findOne({ id: project.responsible_id }).then(([responsible]) => responsible)
 });
 
 const resolveProjects = projects => projects.map(resolveProject);
@@ -14,7 +16,7 @@ const findOne = params => db.projects.findOne(params).then(resolveProjects).then
 
 const createProject = ({ input }) => db.projects.create(input);
 
-const updateProject = ({ id, params }) => db.project.update(id, params);
+const updateProject = ( id, params ) => db.projects.update(id, params);
 
 module.exports = {
   findAll,

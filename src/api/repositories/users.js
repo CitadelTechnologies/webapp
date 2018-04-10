@@ -1,6 +1,6 @@
 const qb = require('./queryBuilder');
 
-const findAll = ({ search } = {}) => {
+exports.findAll = ({ search } = {}) => {
   const query = qb.select().from('user__users');
 
   if (search)
@@ -12,11 +12,8 @@ const findAll = ({ search } = {}) => {
   return query.orderBy('username');
 };
 
-const findOne = ({ id }) => {
-  return qb.select().from('user__users').where('id', id);
-};
+exports.findOne = ({ id }) => qb.select().from('user__users').where('id', id);
 
-module.exports = {
-  findAll,
-  findOne
-};
+exports.create = user => qb.insert(user).into('user__users').returning('id').then(
+  result => Object.assign({}, user, { id: result[0] })
+);
