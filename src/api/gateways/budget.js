@@ -1,6 +1,10 @@
 const axios = require('axios');
 const apiUrl = 'http://citadel_budget_manager';
 
+exports.getBudget = slug => axios.get(`${apiUrl}/budgets/${slug}`)
+    .then(response => response.data)
+    .catch(error => {return null});
+
 exports.createBudget = (name, description) => axios.post(`${apiUrl}/budgets`, {
     name: name,
     description: description
