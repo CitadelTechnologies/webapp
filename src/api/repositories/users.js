@@ -14,6 +14,10 @@ exports.findAll = ({ search } = {}) => {
 
 exports.findOne = ({ id }) => qb.select().from('user__users').where('id', id);
 
-exports.create = user => qb.insert(user).into('user__users').returning('id').then(
-  result => Object.assign({}, user, { id: result[0] })
-);
+exports.findOneByUsername = ({ username }) => qb.select().from('user__users').where('username', username);
+
+exports.create = user => qb.insert((({
+    id, username, email, is_admin, is_active
+}) => ({
+    id, username, email, is_admin, is_active
+}))(user)).into('user__users').returning('id').then(result => Object.assign({}, user, { id: result[0] }));

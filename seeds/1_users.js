@@ -7,6 +7,7 @@ exports.seed = (knex, Promise) => knex('project__projects').del().then(() => kne
             id: 1,
             username: 'Kern',
             email: 'kern046@gmail.com',
+            password: 'test',
             is_active: true,
             is_admin: true,
         })
