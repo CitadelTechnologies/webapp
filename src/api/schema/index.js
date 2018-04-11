@@ -4,6 +4,7 @@ module.exports = `
     project(id: ID!): Project
     users(search: String): [User]
     user(id: ID!): User
+    me(accessToken: String): User
     budget(slug: String): [Budget]
   }
 

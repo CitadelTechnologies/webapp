@@ -54,7 +54,7 @@ class Login extends Component {
           username: event.target[0].value,
           password: event.target[1].value
       }).then(response => {
-          localStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.setItem('user.access_token', response.data.access_token);
           Router.push('/');
       })
       .catch(error => console.log(error));

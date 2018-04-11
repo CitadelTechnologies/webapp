@@ -1,6 +1,8 @@
 import config from '../config';
 import glamorous from 'glamorous';
 import Link from 'next/link';
+import { client } from '../lib/apolloWrapper';
+import gql from 'graphql-tag';
 
 const Body = glamorous.div({
   fontFamily: 'Quattrocento',
@@ -112,13 +114,33 @@ class Layout extends React.Component {
     }
 
     componentWillMount() {
+        let accessToken = null;
         if(typeof window !== 'undefined') {
             var i = 0;
             for(i in styles.body){
                 document.body.style[i] = styles.body[i];
             }
-            this.state.user = JSON.parse(localStorage.getItem('user'));
+            accessToken = localStorage.getItem('user.access_token');
         }
+        if (accessToken === null) {
+            return;
+        }
+        client.query({
+          query: gql`
+            query GetCurrentUser($accessToken: String) {
+              me(accessToken: $accessToken) {
+                username
+              }
+            }
+          `,
+          variables: {accessToken: accessToken}
+      }).then(response => {
+          if (response.data.me === null) {
+              localStorage.removeItem('user.access_token');
+              return;
+          }
+          this.setState({ user: response.data.me })
+      });
     }
 
     componentDidMount() {

@@ -23,4 +23,6 @@ const apolloWrapper = WrappedComponent => {
   }
 };
 
+exports.client = client;
+
 export default apolloWrapper;
