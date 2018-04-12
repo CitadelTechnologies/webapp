@@ -1,6 +1,7 @@
 import config from '../config';
 import glamorous from 'glamorous';
 import Link from 'next/link';
+import Router from 'next/router';
 import { client } from '../lib/apolloWrapper';
 import gql from 'graphql-tag';
 
@@ -104,7 +105,7 @@ var styles = {
     }
 }
 
-class Layout extends React.Component {
+class DashboardLayout extends React.Component {
     constructor(props) {
         super(props);
 
@@ -114,15 +115,15 @@ class Layout extends React.Component {
     }
 
     componentWillMount() {
-        let accessToken = null;
-        if(typeof window !== 'undefined') {
-            var i = 0;
-            for(i in styles.body){
-                document.body.style[i] = styles.body[i];
-            }
-            accessToken = localStorage.getItem('user.access_token');
+        if (typeof window === 'undefined') {
+            return;
         }
+        for(let i in styles.body) {
+            document.body.style[i] = styles.body[i];
+        }
+        let accessToken = localStorage.getItem('user.access_token');
         if (accessToken === null) {
+            Router.push('/login');
             return;
         }
         client.query({
@@ -130,6 +131,7 @@ class Layout extends React.Component {
             query GetCurrentUser($accessToken: String) {
               me(accessToken: $accessToken) {
                 username
+                is_admin
               }
             }
           `,
@@ -137,6 +139,7 @@ class Layout extends React.Component {
       }).then(response => {
           if (response.data.me === null) {
               localStorage.removeItem('user.access_token');
+              Router.push('/login');
               return;
           }
           this.setState({ user: response.data.me })
@@ -164,12 +167,11 @@ class Layout extends React.Component {
                         </Link>
                     </Title>
                     <Toolbar>
-                        <Link href="/projects"><a>Projets</a></Link>
-                        <Link href={config.blogUrl} target="_blank"><a>Blog</a></Link>
-                        {
-                            this.state.user == null
-                            ? <Link href="/login"><a className="button">Se connecter</a></Link>
-                            : <Link href="/dashboard"><a className="button">{ this.state.user.username }</a></Link>
+                        { this.state.user !== null &&
+                            <Link href="/dashboard"><a>{ this.state.user.username }</a></Link>
+                        }
+                        { (this.state.user !== null && this.state.user.is_admin === true) &&
+                            <Link href="/admin"><a className="button">Administration</a></Link>
                         }
                     </Toolbar>
                 </Header>
@@ -181,4 +183,4 @@ class Layout extends React.Component {
     }
 };
 
-export default Layout;
+export default DashboardLayout;

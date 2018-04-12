@@ -55,7 +55,7 @@ class Login extends Component {
           password: event.target[1].value
       }).then(response => {
           localStorage.setItem('user.access_token', response.data.access_token);
-          Router.push('/');
+          Router.push('/dashboard');
       })
       .catch(error => console.log(error));
   }
