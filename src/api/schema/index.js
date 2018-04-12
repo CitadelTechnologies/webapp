@@ -5,7 +5,8 @@ module.exports = `
     users(search: String): [User]
     user(id: ID!): User
     me(accessToken: String): User
-    budget(slug: String): [Budget]
+    budgets: [Budget]
+    budget(slug: String): Budget
   }
 
   type Project {
@@ -50,6 +51,7 @@ module.exports = `
     id: ID!
     username: String!
     email: String
+    is_admin: Boolean
     created_at: String
     updated_at: String
     projects: [Project]

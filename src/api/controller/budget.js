@@ -1,4 +1,4 @@
-const manager = require('../managers/budget');
+const manager = require('../manager/budget');
 
 exports.createSector = (req, res) => manager.createSector(
     req.body.budget,
