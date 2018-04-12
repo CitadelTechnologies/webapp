@@ -1,8 +1,9 @@
 const db = require('../repository');
 const budgetManager = require('../manager/budget');
+const budgetPrefix = 'budget-projet';
 
 const resolveProject = project => Object.assign({}, project, {
-    budget: () => budgetManager.getBudget(`budget-projet-${project.slug}`),
+    budget: () => budgetManager.getBudget(`${budgetPrefix}-${project.slug}`),
     responsible: () => db.user.findOne({ id: project.responsible_id }).then(([responsible]) => responsible)
 });
 
@@ -19,9 +20,10 @@ const createProject = ({ input }) => db.project.create(input);
 const updateProject = ( id, params ) => db.project.update(id, params);
 
 module.exports = {
-  findAll,
-  findByResponsible,
-  findOne,
-  createProject,
-  updateProject
+    budgetPrefix,
+    findAll,
+    findByResponsible,
+    findOne,
+    createProject,
+    updateProject
 };

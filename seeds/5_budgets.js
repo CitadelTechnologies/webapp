@@ -1,4 +1,5 @@
-const { budget } = require('../src/api/managers');
+const { budget } = require('../src/api/manager');
+const { budgetPrefix } = require('../src/api/model/project');
 
 exports.seed = (knex, Promise) => Promise.all([
     budget.deleteBudget("budget-de-la-citadelle")
@@ -7,14 +8,14 @@ exports.seed = (knex, Promise) => Promise.all([
             budget.createSector("budget-de-la-citadelle", "Projets"),
             budget.createSector("budget-de-la-citadelle", "Infrastructure"),
         ])),
-    budget.deleteBudget("budget-projet-craftcamp")
+    budget.deleteBudget(`${budgetPrefix}-craftcamp`)
         .then(response => budget.createBudget("Budget Projet craftcamp", "Budget du projet CraftCamp"))
         .then(response => Promise.all([
-            budget.createSector("budget-projet-craftcamp", "Infrastructure"),
+            budget.createSector(`${budgetPrefix}-craftcamp`, "Infrastructure"),
         ])),
-    budget.deleteBudget("budget-projet-medievistes")
+    budget.deleteBudget(`${budgetPrefix}-medievistes`)
         .then(response => budget.createBudget("Budget Projet medievistes", "Budget du projet Medievistes"))
         .then(response => Promise.all([
-            budget.createSector("budget-projet-medievistes", "Infrastructure"),
+            budget.createSector(`${budgetPrefix}-medievistes`, "Infrastructure"),
         ])),
 ]);

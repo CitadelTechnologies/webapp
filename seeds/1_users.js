@@ -1,4 +1,4 @@
-const manager = require('../src/api/managers/user');
+const manager = require('../src/api/manager/user');
 
 exports.seed = (knex, Promise) => knex('project__projects').del().then(() => knex('user__users')
     .del()
