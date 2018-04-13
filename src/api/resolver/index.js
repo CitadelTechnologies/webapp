@@ -8,5 +8,6 @@ module.exports = {
     users: ({ search }) => manager.user.findAll({ search }),
     user: ({ id }) => manager.user.findOne({ id }),
     me: ({ accessToken }) => manager.user.getUserByAccessToken({ accessToken }),
+    addSector: ({ input }) => manager.budget.createSector(input.budget, input.name),
     addTransaction: ({ input }) => manager.budget.addTransaction({ input }),
 };

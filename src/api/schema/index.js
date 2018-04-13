@@ -10,6 +10,7 @@ module.exports = `
   }
 
   type Mutation {
+      addSector(input: SectorInput): Sector
       addTransaction(input: TransactionInput): Transaction
   }
 
@@ -34,6 +35,11 @@ module.exports = `
       sectors: [Sector]
       created_at: String
       updated_at: String
+  }
+
+  input SectorInput {
+      name: String
+      budget: String
   }
 
   type Sector {
