@@ -30,4 +30,6 @@ const budgetsQuery = gql`
   }
 `;
 
-export default graphql(budgetsQuery)(BudgetsListContainer);
+export default graphql(budgetsQuery, {
+  options: ({ slug }) => ({ slug }),
+})(BudgetsListContainer);

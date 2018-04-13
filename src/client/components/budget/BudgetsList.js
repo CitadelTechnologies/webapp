@@ -33,7 +33,7 @@ const BudgetsList = ({ budgets }) => {
       <div style={listStyle}>
         <h3>Budgets</h3>
         {budgets.map(budget =>
-            <Link key={budget.slug} href="/">
+            <Link key={budget.slug} href={`/admin/budget?slug=${budget.slug}`}>
                 <Budget>
                     <header>
 

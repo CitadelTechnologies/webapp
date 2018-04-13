@@ -9,6 +9,10 @@ module.exports = `
     budget(slug: String): Budget
   }
 
+  type Mutation {
+      addTransaction(input: TransactionInput): Transaction
+  }
+
   type Project {
     id: ID!
     name: String!
@@ -36,6 +40,15 @@ module.exports = `
       name: String!
       slug: String!
       transactions: [Transaction]
+  }
+
+  input TransactionInput {
+      wording: String
+      description: String
+      type: Boolean
+      amount: Float
+      budget: String
+      sector: String
   }
 
   type Transaction {

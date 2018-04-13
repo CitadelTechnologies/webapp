@@ -18,3 +18,11 @@ exports.createSector = (budgetSlug, name) => axios.post(`${apiUrl}/budgets/${bud
     name: name
 }).then(response => response.data)
 .catch(error => console.log(error));
+
+exports.addTransaction = data => axios.post(`${apiUrl}/budgets/${data.budget}/sectors/${data.sector}/transactions`, {
+    wording: data.wording,
+    description: data.description,
+    type: data.type,
+    amount: data.amount,
+}).then(response => response.data)
+.catch(error => console.log(error));

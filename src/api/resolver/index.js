@@ -8,4 +8,5 @@ module.exports = {
     users: ({ search }) => manager.user.findAll({ search }),
     user: ({ id }) => manager.user.findOne({ id }),
     me: ({ accessToken }) => manager.user.getUserByAccessToken({ accessToken }),
+    addTransaction: ({ input }) => manager.budget.addTransaction({ input }),
 };
