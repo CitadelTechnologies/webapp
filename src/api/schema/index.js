@@ -51,7 +51,7 @@ module.exports = `
   input TransactionInput {
       wording: String
       description: String
-      type: Boolean
+      type: String
       amount: Float
       budget: String
       sector: String
@@ -61,7 +61,7 @@ module.exports = `
       id: ID!
       wording: String
       description: String
-      type: Boolean
+      type: String
       amount: Float
       created_at: String
   }
