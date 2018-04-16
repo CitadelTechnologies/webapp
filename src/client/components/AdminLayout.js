@@ -2,8 +2,6 @@ import config from '../config';
 import glamorous from 'glamorous';
 import Link from 'next/link';
 import Router from 'next/router';
-import { client } from '../lib/apolloWrapper';
-import gql from 'graphql-tag';
 
 const Body = glamorous.div({
   fontFamily: 'Quattrocento',
@@ -110,7 +108,7 @@ class AdminLayout extends React.Component {
         super(props);
 
         this.state = {
-            user: null
+            user: this.props.user
         };
     }
 
@@ -121,33 +119,12 @@ class AdminLayout extends React.Component {
         for(let i in styles.body) {
             document.body.style[i] = styles.body[i];
         }
-        let accessToken = localStorage.getItem('user.access_token');
-        if (accessToken === null) {
-            Router.push('/login');
-            return;
-        }
-        client.query({
-          query: gql`
-            query GetCurrentUser($accessToken: String) {
-              me(accessToken: $accessToken) {
-                username
-                is_admin
-              }
-            }
-          `,
-          variables: {accessToken: accessToken}
-      }).then(response => {
-          if (response.data.me === null) {
-              localStorage.removeItem('user.access_token');
-              Router.push('/login');
-              return;
-          }
-          if (response.data.me.is_admin !== true) {
-              Router.push('/dashboard');
-              return;
-          }
-          this.setState({ user: response.data.me })
-      });
+      if (this.state.user === null) {
+          return Router.push('/login');
+      }
+      if (this.state.user.is_admin !== true) {
+          return Router.push('/dashboard');
+      }
     }
 
     componentDidMount() {

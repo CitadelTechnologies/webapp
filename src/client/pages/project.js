@@ -3,17 +3,22 @@ import Layout from '../components/Layout';
 import ProjectContainer from '../containers/ProjectContainer';
 import apolloWrapper from '../lib/apolloWrapper';
 import Head from 'next/head';
+import ConnectedPage from '../components/ConnectedPage';
 
-class Project extends React.Component {
+class Project extends ConnectedPage {
   constructor(props) {
     super(props);
 
     this.state = {
-      project: null
+        ...this.state,
+        project: null
     };
   }
 
   render() {
+      if (this.state.ready === false) {
+          return null;
+      }
     return(
       <div>
         <Head>
@@ -25,7 +30,7 @@ class Project extends React.Component {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <Layout>
+        <Layout user={this.state.user}>
           <ProjectContainer id={this.props.url.query.id} />
         </Layout>
       </div>

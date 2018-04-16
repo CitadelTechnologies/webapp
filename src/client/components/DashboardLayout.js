@@ -2,8 +2,6 @@ import config from '../config';
 import glamorous from 'glamorous';
 import Link from 'next/link';
 import Router from 'next/router';
-import { client } from '../lib/apolloWrapper';
-import gql from 'graphql-tag';
 
 const Body = glamorous.div({
   fontFamily: 'Quattrocento',
@@ -108,9 +106,8 @@ var styles = {
 class DashboardLayout extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            user: null
+            user: this.props.user
         };
     }
 
@@ -121,29 +118,10 @@ class DashboardLayout extends React.Component {
         for(let i in styles.body) {
             document.body.style[i] = styles.body[i];
         }
-        let accessToken = localStorage.getItem('user.access_token');
-        if (accessToken === null) {
-            Router.push('/login');
-            return;
+
+        if (this.state.user === null) {
+            return Router.push('/login');
         }
-        client.query({
-          query: gql`
-            query GetCurrentUser($accessToken: String) {
-              me(accessToken: $accessToken) {
-                username
-                is_admin
-              }
-            }
-          `,
-          variables: {accessToken: accessToken}
-      }).then(response => {
-          if (response.data.me === null) {
-              localStorage.removeItem('user.access_token');
-              Router.push('/login');
-              return;
-          }
-          this.setState({ user: response.data.me })
-      });
     }
 
     componentDidMount() {

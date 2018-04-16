@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Router from 'next/router';
 import glamorous from 'glamorous';
 import Layout from '../components/Layout';
+import ConnectedPage from '../components/ConnectedPage';
 
 import ProjectsListContainer from '../containers/ProjectsListContainer';
 import apolloWrapper from '../lib/apolloWrapper';
@@ -23,12 +23,13 @@ const Input = glamorous.input({
   margin: '25px 0',
 });
 
-class Projects extends Component {
+class Projects extends ConnectedPage {
   constructor(props) {
     super(props);
 
     this.state = {
-      searchQuery: null,
+        ...this.state,
+        searchQuery: null,
     };
 
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -63,6 +64,9 @@ class Projects extends Component {
   }
 
   render() {
+      if (this.state.ready === false) {
+          return null;
+      }
     const { url } = this.props;
     return (
       <div>
@@ -75,7 +79,7 @@ class Projects extends Component {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <Layout>
+        <Layout user={this.state.user}>
           <Container>
             <Input
               type="text"
