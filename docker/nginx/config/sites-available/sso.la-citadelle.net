@@ -1,0 +1,25 @@
+server {
+  listen 80;
+
+  server_name sso.la-citadelle.net;
+
+  access_log /var/log/nginx/citadel_sso.access.log;
+  error_log /var/log/nginx/citadel_sso.error.log;
+
+  merge_slashes on;
+
+  location / {
+        proxy_http_version 1.1;
+        proxy_pass http://citadel_sso;
+        proxy_set_header        Host            $host;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        Connection "";
+        proxy_buffering off;
+        proxy_ignore_client_abort on;
+  }
+
+  location ~ /\.ht {
+    deny all;
+  }
+}
