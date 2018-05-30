@@ -11,5 +11,6 @@ exports.createTransaction = (req, res) => manager.createTransaction(
     req.body.wording,
     req.body.description,
     req.body.type,
-    req.body.amount
+    req.body.amount,
+    req.body.processed_at,
 ).then();

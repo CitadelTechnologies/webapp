@@ -55,6 +55,7 @@ module.exports = `
       amount: Float
       budget: String
       sector: String
+      processed_at: String
   }
 
   type Transaction {
@@ -64,6 +65,7 @@ module.exports = `
       type: String
       amount: Float
       created_at: String
+      processed_at: String
   }
 
   type User {

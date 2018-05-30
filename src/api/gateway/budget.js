@@ -24,5 +24,6 @@ exports.addTransaction = data => axios.post(`${apiUrl}/budgets/${data.budget}/se
     description: data.description,
     type: data.type,
     amount: data.amount,
+    processed_at: (new Date(data.processed_at)).toISOString(),
 }).then(response => response.data)
 .catch(error => console.log(error));
