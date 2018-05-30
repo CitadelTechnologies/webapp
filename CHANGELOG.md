@@ -1,3 +1,20 @@
+## [0.2.0] - 2018-05-30
+### Added
+- Thematics and topics model
+- Project details page
+- Homepage presentation
+- Production configuration for Docker Compose
+- Authentication server container
+- Budget Manager and MongoDB containers
+- User dashboard
+- Admin panel
+- Budget administration for both organization and projects
+- Data vizualizers for the organization budget
+
+### Changed
+- Rename DevelopTech project to CraftCamp
+- Files architecture
+
 ## [0.1.0] - 2017-08-04
 ### Added
 - Link to the blog in the app toolbar
