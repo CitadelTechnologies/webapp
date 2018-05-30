@@ -26,6 +26,20 @@ services:
       networks:
           - citadel
 
+  budget_manager:
+      container_name: citadel_budget_manager
+      image: citadeltechnologies/budget-manager
+      env_file:
+          - citadel.env
+      networks:
+          - citadel
+
+  mongo:
+      container_name: citadel_mongo
+      image: mongo
+      networks:
+          - citadel
+
   redis:
       container_name: citadel_redis
       image: redis

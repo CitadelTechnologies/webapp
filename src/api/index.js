@@ -2,9 +2,9 @@ const router = require('express').Router();
 const bodyParser = require('body-parser');
 const expressGraphQL = require('express-graphql');
 const { buildSchema } = require('graphql');
-const resolvers = require('./resolvers');
+const resolver = require('./resolver');
 const schema = require('./schema');
-const controllers = require('./controllers');
+const controllers = require('./controller');
 
 router.use(bodyParser.json());
 router.use('/', controllers);
@@ -12,7 +12,7 @@ router.use(
     '/graphql',
     expressGraphQL({
         schema: buildSchema(schema),
-        rootValue: resolvers,
+        rootValue: resolver,
         graphiql: true,
     })
 );

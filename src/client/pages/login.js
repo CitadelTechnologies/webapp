@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Router from 'next/router';
 import glamorous from 'glamorous';
 import Layout from '../components/Layout';
+import ConnectedPage from '../components/ConnectedPage';
 import axios from 'axios';
 
 import ProjectsListContainer from '../containers/ProjectsListContainer';
@@ -40,7 +40,7 @@ const Container = glamorous.div({
   }
 });
 
-class Login extends Component {
+class Login extends ConnectedPage {
   constructor(props) {
     super(props);
 
@@ -54,13 +54,16 @@ class Login extends Component {
           username: event.target[0].value,
           password: event.target[1].value
       }).then(response => {
-          localStorage.setItem('user', JSON.stringify(response.data));
-          Router.push('/');
+          localStorage.setItem('user.access_token', response.data.access_token);
+          Router.push('/dashboard');
       })
       .catch(error => console.log(error));
   }
 
   render() {
+      if (this.state.ready === false) {
+          return null;
+      }
     const { url } = this.props;
     return (
         <div>
@@ -73,7 +76,7 @@ class Login extends Component {
                 content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <Layout>
+            <Layout user={this.state.user}>
                 <Container>
                     <form onSubmit={this.onSubmit}>
                         <h3>Connexion</h3>

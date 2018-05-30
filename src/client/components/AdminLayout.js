@@ -1,6 +1,7 @@
 import config from '../config';
 import glamorous from 'glamorous';
 import Link from 'next/link';
+import Router from 'next/router';
 
 const Body = glamorous.div({
   fontFamily: 'Quattrocento',
@@ -102,7 +103,7 @@ var styles = {
     }
 }
 
-class Layout extends React.Component {
+class AdminLayout extends React.Component {
     constructor(props) {
         super(props);
 
@@ -112,12 +113,18 @@ class Layout extends React.Component {
     }
 
     componentWillMount() {
-        if(typeof window === 'undefined') {
+        if (typeof window === 'undefined') {
             return;
         }
-        for(let i in styles.body){
+        for(let i in styles.body) {
             document.body.style[i] = styles.body[i];
         }
+      if (this.state.user === null) {
+          return Router.push('/login');
+      }
+      if (this.state.user.is_admin !== true) {
+          return Router.push('/dashboard');
+      }
     }
 
     componentDidMount() {
@@ -141,14 +148,10 @@ class Layout extends React.Component {
                         </Link>
                     </Title>
                     <Toolbar>
-                        <Link href="/budget"><a>Budget</a></Link>
-                        <Link href="/projects"><a>Projets</a></Link>
-                        <Link href={config.blogUrl} target="_blank"><a>Blog</a></Link>
-                        {
-                            this.state.user == null
-                            ? <Link href="/login"><a className="button">Se connecter</a></Link>
-                            : <Link href="/dashboard"><a className="button">{ this.state.user.username }</a></Link>
+                        { this.state.user !== null &&
+                            <Link href="/dashboard"><a>{ this.state.user.username }</a></Link>
                         }
+                        <Link href="/admin"><a className="button">Administration</a></Link>
                     </Toolbar>
                 </Header>
                 <Wrapper>
@@ -159,4 +162,4 @@ class Layout extends React.Component {
     }
 };
 
-export default Layout;
+export default AdminLayout;
