@@ -9,8 +9,6 @@ services:
     container_name: citadel_app
     build: docker/app
     working_dir: /srv/app
-    environment:
-      NODE_ENV: ${NODE_ENV}
     env_file:
       - citadel.env
     networks:
