@@ -141,6 +141,7 @@ class Layout extends React.Component {
                         </Link>
                     </Title>
                     <Toolbar>
+                        <Link href="/budget"><a>Budget</a></Link>
                         <Link href="/projects"><a>Projets</a></Link>
                         <Link href={config.blogUrl} target="_blank"><a>Blog</a></Link>
                         {

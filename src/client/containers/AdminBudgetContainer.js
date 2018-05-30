@@ -1,16 +1,16 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import Budget from '../components/budget/Budget';
+import AdminBudget from '../components/budget/AdminBudget';
 
-class BudgetContainer extends React.Component {
+class AdminBudgetContainer extends React.Component {
     render() {
         if (this.props.data.loading || this.props.data.error) {
             return (
                 <p style={{ color: 'white', textAlign: 'center' }}> Loading budget... </p>
             );
         }
-        return <Budget budget={this.props.data.budget} />
+        return <AdminBudget budget={this.props.data.budget} />
     }
 };
 
@@ -33,4 +33,4 @@ const budgetQuery = gql`
   }
 `;
 
-export default graphql(budgetQuery)(BudgetContainer);
+export default graphql(budgetQuery)(AdminBudgetContainer);

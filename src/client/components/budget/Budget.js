@@ -3,49 +3,55 @@ import Link from 'next/link';
 import glamorous from 'glamorous';
 import { client } from '../../lib/apolloWrapper';
 import gql from 'graphql-tag';
+import BudgetChart from './BudgetChart';
+import SectorChart from './SectorChart';
+
+const Header = glamorous.div({
+    margin: '40px 100px'
+});
 
 const BudgetWrapper = glamorous.div({
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around'
 });
 
-const BudgetData = glamorous.div({
-    display: 'flex',
-    "& > div": {
-        width: '300px',
-        padding: '10px',
-        "& > section": {
-            "& > div": {
-                padding: '10px',
-                "&.revenue": {
-                    backgroundColor: 'rgba(200, 200, 255, 0.3)'
-                },
-                "&.expense": {
-                    backgroundColor: 'rgba(255, 200, 200, 0.3)'
-                }
-            }
-        }
-    }
-});
-
-const Form = glamorous.div({
-    width: '300px',
-    margin: '20px 40px',
-    padding: '10px',
-    boxShadow: '0px 0px 5px rgba(0,0,0,0.6)',
-    "& > h3": {
-        margin: '0px',
+const TransactionsList = glamorous.div({
+    "& > header > h3": {
+        marginTop: '0px'
     },
-    "& > form": {
-        display: 'flex',
-        flexDirection: 'column',
-        "& > div": {
-            margin: 'auto'
+    "& > section > .transaction": {
+        padding: '10px',
+        marginBottom: '5px',
+        textAlign: 'right',
+        border: '1px solid #D0D0D0',
+        borderRadius: '5px',
+        boxShadow: '0px 0px 3px rgba(0,0,0,0.2)',
+        "& > header > h4": {
+            margin: '0px'
         },
-        "& > input": {
-            height: '35px',
-            border: 'none',
-            borderBottom: '1px solid #AAA',
+        "& > section > .amount": {
+            padding: '10px 20px',
+            fontSize: '1.2em',
+            fontWeight: 'bold',
+        },
+        "& > footer": {
+            display: 'flex',
+            justifyContent: 'space-between',
+            "& > em": {
+                paddingLeft: '10px'
+            }
+        },
+        "&.income > section > .amount": {
+            "&:before": {
+                content: ' + '
+            },
+            backgroundColor: 'rgba(200, 200, 255, 0.3)',
+        },
+        "&.expense > section > .amount": {
+            "&:before": {
+                content: ' - '
+            },
+            backgroundColor: 'rgba(255, 200, 200, 0.3)',
         }
     }
 });
@@ -54,134 +60,78 @@ class Budget extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { budget: props.budget };
-        this.createSector = this.createSector.bind(this);
-        this.createTransaction = this.createTransaction.bind(this);
+        this.state = {
+            budget: props.budget,
+            transactions: {}
+        };
+        this.sortTransactions = this.sortTransactions.bind(this);
     }
 
-    createSector(e) {
-        e.preventDefault();
-
-        let data = new FormData(e.currentTarget);
-        client.mutate({
-            mutation: gql`
-                mutation AddSector($input: SectorInput) {
-                    addSector(input: $input) {
-                        name
-                        slug
-                    }
+    componentWillMount() {
+        let i = 1;
+        for (let sector of this.state.budget.sectors) {
+            for (let transaction of sector.transactions) {
+                let processedAt = new Date(transaction.processed_at);
+                this.state.transactions[+ processedAt] = {
+                    wording: transaction.wording,
+                    type: transaction.type,
+                    amount: transaction.amount,
+                    sector_name: sector.name,
+                    processed_at: processedAt
+                };
+                i++;
+                if (i === 20) {
+                    break;
                 }
-            `,
-            variables: {input: {
-                name: data.get('name'),
-                budget: this.state.budget.slug,
-            }}
-        }).then(response => {
-            this.setState(state => ({
-                ...state,
-                budget: {
-                    ...state.budget,
-                    sectors: this.state.budget.sectors.concat(response.data.addSector),
-                },
-            }));
-        });
+            }
+        }
+        this.sortTransactions();
     }
 
-    createTransaction(e) {
-        e.preventDefault();
-        let data = new FormData(e.currentTarget);
-        var sectorSlug = data.get('sector');
-        client.mutate({
-          mutation: gql`
-            mutation AddTransaction($input: TransactionInput) {
-              addTransaction(input: $input) {
-                id
-                wording
-                description
-                type
-                amount
-              }
-            }
-          `,
-          variables: {input: {
-              wording: data.get('wording'),
-              description: data.get('description'),
-              type: data.get('type'),
-              amount: data.get('amount'),
-              sector: sectorSlug,
-              budget: this.state.budget.slug,
-          }}
-      }).then(response => {
-          this.setState(state => ({
-              ...state,
-              budget: {
-                  ...state.budget,
-                  sectors: this.state.budget.sectors.map(sector => {
-                      if (sector.slug === sectorSlug) {
-                          sector = {
-                              ...sector,
-                              transactions: sector.transactions.concat(response.data.addTransaction)
-                          };
-                      }
-                      return sector;
-                  })
-              },
-          }));
-      });
+    sortTransactions() {
+        const keys = Object.keys( this.state.transactions );
+        keys.sort().reverse();
+        this.state.transactions = keys.reduce(( target, key ) => {
+            target[ key ] = this.state.transactions[ key ];
+            return target;
+        }, {});
     }
 
     render() {
         return (
             <div>
-                <h3 style={{marginLeft: '40px'}}>{ this.state.budget.name }</h3>
+                <Header>
+                    <h3>{ this.state.budget.name }</h3>
+                </Header>
                 <BudgetWrapper>
                     <div>
-                        <Form>
-                            <h3>Créer un secteur</h3>
-                            <form onSubmit={this.createSector}>
-                                <input type="text" name="name" placeholder="nom" />
-                                <button type="submit">Enregistrer</button>
-                            </form>
-                        </Form>
-                        <Form>
-                            <h3>Enregistrer une transaction</h3>
-                            <form onSubmit={this.createTransaction}>
-                                <input type="text" name="wording" placeholder="libellé" />
-                                <input type="text" name="amount" placeholder="montant" />
-                                <div>
-                                    <input id="type-revenue" type="radio" name="type" value="true" defaultChecked />
-                                    <label htmlFor="type-revenue">Revenu</label>
-                                </div>
-                                <div>
-                                    <input id="type-expense" type="radio" name="type" value="false" />
-                                    <label htmlFor="type-expense">Dépense</label>
-                                </div>
-                                <select name="sector">{ this.state.budget.sectors.map(sector =>
-                                    <option key={sector.slug} value={sector.slug}>
-                                    {sector.name}
-                                    </option>
-                                )}</select>
-                                <textarea name="description" placeholder="description"></textarea>
-                                <button type="submit">Enregistrer</button>
-                            </form>
-                        </Form>
+                        <BudgetChart budget={this.state.budget} />
+                        <SectorChart budget={this.state.budget} />
                     </div>
-                    <BudgetData>
-                        { this.state.budget.sectors.map(sector =>
-                            <div key={sector.slug}>
-                                <header>
-                                    <h4>{ sector.name }</h4>
-                                </header>
-                                <section>
-                                    { sector.transactions.map(transaction =>
-                                        <div key={transaction.id} className={transaction.type === true ? 'revenue': 'expense'}>
-                                            { transaction.wording } - { transaction.amount }€
-                                        </div>
-                                    )}
-                                </section>
-                            </div>
-                        )}
-                    </BudgetData>
+                    <TransactionsList>
+                        <header>
+                            <h3>Dernières transactions</h3>
+                        </header>
+                        <section>
+                            { Object.keys(this.state.transactions).map(transactionKey => {
+                                const transaction = this.state.transactions[transactionKey];
+                                return (
+                                    <div className={`transaction ${transaction.type}`} key={transactionKey}>
+                                        <header>
+                                            <h4>{ transaction.wording }</h4>
+                                        </header>
+                                        <section>
+                                            <p className="amount">{ transaction.amount }€</p>
+                                        </section>
+                                        <footer>
+                                            <strong>{ transaction.sector_name }</strong>
+                                            <em>{transaction.processed_at.toLocaleString()}</em>
+                                        </footer>
+                                    </div>
+                                )
+                            })}
+                        </section>
+                    </TransactionsList>
                 </BudgetWrapper>
             </div>
         );
