@@ -1,51 +1,85 @@
 ---
-version: '2'
+version: '3'
+networks:
+    citadel:
+        driver: bridge
+
 services:
-  app:
-    container_name: citadel_app
-    build: docker/app
-    working_dir: /srv/app
-    env_file:
-      - citadel.env
-    links:
-      - mysql
-    volumes:
-      - ".:/srv/app"
+    app:
+        container_name: citadel_app
+        build: docker/app
+        working_dir: /srv/app
+        env_file:
+            - citadel.env
+        networks:
+            - citadel
+        volumes:
+            - ".:/srv/app"
 
-  mysql:
-      container_name: citadel_mysql
-      build: docker/mysql
-      env_file:
-          - citadel.env
-      volumes:
-          # mysql
-          - "./volumes/mysql:/var/lib/mysql"
+    authentication_server:
+        container_name: citadel_sso
+        image: citadeltechnologies/authentication-server
+        env_file:
+            - citadel.env
+        networks:
+            - citadel
 
-  wordpress:
-    container_name: citadel_wordpress
-    image: wordpress
-    env_file:
-      - citadel.env
-    links:
-      - mysql
+    budget_manager:
+        container_name: citadel_budget_manager
+        image: citadeltechnologies/budget-manager
+        env_file:
+            - citadel.env
+        networks:
+            - citadel
 
-  nginx:
-      container_name: citadel_nginx
-      build: docker/nginx
-      env_file:
-          - citadel.env
-      extra_hosts:
-          - "local.la-citadelle.net:127.0.0.1"
-          - "local-blog.la-citadelle.net:127.0.0.1"
-      volumes:
-          # applications
-          - ".:/srv/app"
-          # nginx
-          - "./volumes/html:/usr/share/nginx/html"
-          - "./volumes/logs/nginx:/var/log/nginx"
-      links:
-          - app
-          - wordpress
-      ports:
-          - "443:443"
-          - "80:80"
+    mongo:
+        container_name: citadel_mongo
+        image: mongo
+        networks:
+            - citadel
+
+    redis:
+        container_name: citadel_redis
+        image: redis
+        env_file:
+            - citadel.env
+        networks:
+            - citadel
+
+    mysql:
+        container_name: citadel_mysql
+        build: docker/mysql
+        env_file:
+            - citadel.env
+        networks:
+            - citadel
+        volumes:
+            # mysql
+            - "./volumes/mysql:/var/lib/mysql"
+
+    wordpress:
+        container_name: citadel_wordpress
+        image: wordpress
+        env_file:
+            - citadel.env
+        networks:
+            - citadel
+
+    nginx:
+        container_name: citadel_nginx
+        build: docker/nginx
+        env_file:
+            - citadel.env
+        extra_hosts:
+            - "www.la-citadelle.net:127.0.0.1"
+        volumes:
+            # applications
+            - ".:/srv/app"
+            # nginx
+            - "./volumes/html:/usr/share/nginx/html"
+            - "./volumes/logs/nginx:/var/log/nginx"
+        networks:
+            - citadel
+        ports:
+            - "443:443"
+            - "80:80"
