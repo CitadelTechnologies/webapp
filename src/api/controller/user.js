@@ -6,5 +6,5 @@ exports.connect = (req, res) => {
         username: req.body.username,
         password: req.body.password,
     }).then(response => res.send(response.data))
-    .catch(error => res.status(400).send(error));
+    .catch(response => res.status(400).send(response.data));
 };
