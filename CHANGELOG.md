@@ -1,3 +1,15 @@
+## [0.2.1] - 2018-05-31
+### Added
+- SSO virtual host for production environment
+
+### Changed
+- Production Docker Compose configuration
+
+### Fixed
+- Vulnerable dependencies
+- Authentication rejection
+- Environment variables
+
 ## [0.2.0] - 2018-05-30
 ### Added
 - Thematics and topics model
