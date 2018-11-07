@@ -62,6 +62,6 @@ class Project
 
     public function getDescription(): string
     {
-        return $this;
+        return $this->description;
     }
 }

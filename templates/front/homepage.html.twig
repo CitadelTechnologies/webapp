@@ -14,4 +14,25 @@
             <img src="{{ asset('images/banner.svg') }}" alt="La Citadelle"/>
         </h1>
     </nav>
+
+    <div id="projects">
+        <header>
+            <h3>Nos projets</h3>
+        </header>
+        <section>
+            {% for project in projects %}
+                <div>
+                    <header>
+                        <h4>{{ project.name }}</h4>
+                    </header>
+                    <section>
+                        {{ project.description }}
+                    </section>
+                </div>
+            {% endfor %}
+        </section>
+        <footer>
+
+        </footer>
+    </div>
 {% endblock %}
