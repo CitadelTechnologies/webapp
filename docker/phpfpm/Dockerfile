@@ -1,0 +1,13 @@
+FROM php:7.2-fpm
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y wget zip unzip libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install pdo pdo_mysql intl opcache \
+    && wget https://phar.phpunit.de/phpunit-6.1.phar \
+    && chmod +x phpunit-6.1.phar \
+    && mv phpunit-6.1.phar /usr/bin/phpunit \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/bin/ --filename=composer \
+    && php -r "unlink('composer-setup.php');"

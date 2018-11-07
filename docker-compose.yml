@@ -1,0 +1,42 @@
+---
+version: '3.5'
+networks:
+  server:
+    driver: bridge
+  mysql:
+    driver: bridge
+
+services:
+  app:
+    container_name: citadel_app
+    working_dir: /srv/app
+    build: docker/phpfpm
+    env_file: citadel.env
+    networks:
+      - server
+      - mysql
+    volumes:
+      - '.:/srv/app'
+
+  nginx:
+    container_name: citadel_nginx
+    build: docker/nginx
+    env_file: citadel.env
+    networks:
+      - server
+    volumes:
+      - '.:/srv/app'
+      - './var/ssl:/etc/letsencrypt'
+      - './var/log/nginx:/var/log/nginx'
+    ports:
+      - '80:80'
+      - '443:443'
+
+  mysql:
+    container_name: citadel_mysql
+    image: mysql:5.7
+    env_file: citadel.env
+    networks:
+      - mysql
+    volumes:
+      - './var/mysql:/var/lib/mysql'
