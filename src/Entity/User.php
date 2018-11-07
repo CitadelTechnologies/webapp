@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\{
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user__users")
+ * @ORM\HasLifecycleCallbacks
  */
 class User implements UserInterface
 {
@@ -38,10 +39,8 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=150)
      */
     protected $password;
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    protected $salt;
+
+    protected $salt = '';
     /**
      * @ORM\Column(type="array")
      */
