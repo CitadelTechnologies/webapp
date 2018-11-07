@@ -4,9 +4,6 @@ namespace App\Entity\Helper;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\HasLifecycleCallbacks
- */
 trait ModificationDateTrait
 {
     /**

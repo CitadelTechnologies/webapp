@@ -9,6 +9,7 @@ use App\Entity\Helper\ModificationDateTrait;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  * @ORM\Table(name="project__jobs")
+ * @ORM\HasLifecycleCallbacks
  */
 class Job
 {
@@ -89,7 +90,7 @@ class Job
     {
         $this->user = $user;
 
-        return this;
+        return $this;
     }
 
     public function getUser(): ?User
